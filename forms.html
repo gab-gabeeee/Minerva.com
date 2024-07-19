@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=devide-width, initial-scale=1.0">
+    <title>Minerva</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap" rel="stylesheet">
+
+</head>
+
+  <body>
+    <section class="header" id="section1">
+       <nav>
+          <a href="index.html"><img src="logoMinerva.png"></a>
+          <div class="nav-links">
+            <ul>
+                <li><a href="index.html">Página principal</a></li>
+                <li><a href="forms.html">Cronograma</a></li>
+                <li><a href="monitor.html">Monitor</a></li>
+                <li><a href="https://jmrds.github.io/Minervapomodoro/">Pomodoro</a></li>
+            </ul>
+          </div>
+        </nav>
+
+  <div class="formbold-main-wrapper">
+        <div class="formbold-form-wrapper">
+            <form id="minerva-form">
+                <div class="formbold-input-flex">
+                    <div>
+                        <label for="nome" class="formbold-form-label">
+                            Nome
+                        </label>
+                        <input type="text" name="nome" id="nome" placeholder="Seu Nome ;)" class="formbold-form-input" />
+                    </div>
+                    <div>
+                        <label for="email" class="formbold-form-label"> E-mail </label>
+                        <input type="email" name="email" id="email" placeholder="seu@email.com" class="formbold-form-input" />
+                    </div>
+                </div>
+                <div class="formbold-input-flex">
+                    <div>
+                        <label for="horas" class="formbold-form-label">
+                            Horas Diarias (Apenas números)
+                        </label>
+                        <input type="number" name="horas" id="horas" placeholder="7" class="formbold-form-input" />
+                    </div>
+                    <div>
+                        <label for="semanas" class="formbold-form-label"> Semanas Até a Prova </label>
+                        <input type="number" name="semanas" id="semanas" placeholder="4" class="formbold-form-input" />
+                    </div>
+                    <div>
+                        <label for="objetivo" class="formbold-form-label"> Qual o seu objetivo? </label>
+                        <input type="text" name="objetivo" id="objetivo" placeholder="Estudar para a Olimpiada Brasileira de Física" class="formbold-form-input" />
+                    </div>
+                </div>
+                <button type="submit" class="formbold-submit-btn">Submit</button>
+            </form>
+
+            <div id="container" style="color: black;"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('minerva-form');
+        const resposta = document.getElementById('resposta')
+
+        function formatText(text) {
+            // Separar o texto em dias usando o delimitador "---"
+            const days = text.split('---').map(day => day.trim()).filter(day => day);
+
+            // Obter o elemento onde as divs serão inseridas
+            const container = document.getElementById('container');
+            container.innerHTML = ''; // Limpar o conteúdo anterior
+
+            // Iterar sobre cada dia e criar uma div
+            days.forEach(day => {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('day');
+                dayDiv.textContent = day;
+                container.appendChild(dayDiv);
+    });
+}
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const formData = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                horas: document.getElementById('horas').value,
+                semanas: document.getElementById('semanas').value,
+                objetivo: document.getElementsByClassName('objetivo').value,
+            };
+
+            const prompt = `Imagine que você seja um ótimo mentor de estudantes do ensino médio que realizam olimpíadas científicas. Baseado no texto a seguir, crie e me retorne SOMENTE um cronograma de estudos baseado nas minhas respostas para as perguntas realizadas após o texto seguindo a metodologia da triade do tempo e observações importantes sobre como o utilizar de melhor forma. Retorne EXATAMENTE e SOMENTE o modelo a seguir
+Retorne , SOMENTE, as informações no seguinte formato DE FORMA PLENAMENTE DIRETA, SEMPRE com no domingo meia hora de programar a semana seguinte:
+
+[DIA DA SEMANA] ([HORAS TOTAIS])
+[LISTA COM AS ATIVIDADES]
+    [TEMPO]: [TITULO]
+         [(título descritivo da atividade:) exercitar, revisar OU aprender conteúdo, cada matéria deve ter uma quantia balanceada de cada uma das opções]
+...
+
+[OBSERVAÇÕES FINAIS]
+[LISTA COM OBSERVAÇÕES IMPORTANTES SOBRE A MELHOR FORMA DE UTILIZAR O METODO]: A falta de organização e priorização de tarefas pode ser um grande entrave para o sucesso no trabalho. Uma das soluções para esse problema é aplicar a técnica da tríade do tempo. A tríade do tempo é uma metodologia para organizar as atividades e priorizá-las de acordo com a sua importância e urgência, permitindo que os indivíduos e empresas alcancem seus objetivos de forma eficiente e produtiva.
+
+Muitos de nós já nos sentimos sobrecarregados pelo trabalho e pela quantidade de tarefas que precisamos realizar. Parece que não importa quanto tempo dedicamos a elas, nunca conseguimos terminar tudo o que precisamos. Isso pode ser especialmente verdadeiro em um ambiente empresarial, onde a competição é feroz e as expectativas são altas.
+
+O problema de não conseguir terminar as tarefas e sentir-se sobrecarregado é comum entre muitos de nós. No ambiente de trabalho, isso pode impedir o sucesso. Descubra como priorizar suas tarefas e alcançar seus objetivos de forma eficiente e produtiva, lendo nosso artigo sobre Tríade do Tempo.
+
+Como funciona essa metodologia?
+A tríade do tempo é uma ferramenta poderosa que consiste em dividir as atividades em três esferas: urgente, importante e circunstancial.
+
+Esfera Urgente
+As atividades urgentes são aquelas que precisam ser realizadas imediatamente, pois têm consequências graves se não forem concluídas agora. Essas tarefas exigem uma resposta rápida e, geralmente, são desenvolvidas por outras pessoas. É importante lembrar que apenas algumas atividades são realmente urgentes e não devem ser confundidas com as que simplesmente parecem ser.
+
+Alguns exemplos de atividades urgentes:
+
+Responder a uma mensagem de e-mail de um cliente importante com um prazo apertado para a entrega de um projeto;
+Corrigir um erro crítico em um sistema antes que afete negativamente outras pessoas;
+Realizar uma ligação importante para um possível empregador antes do prazo de inscrição;
+Atender a uma emergência médica, como um ataque cardíaco ou acidente;
+Trocar o pneu furado em uma viagem de carro;
+Concluir um relatório importante para o mesmo dia que o chefe/superior solicitou.
+Esfera Importante
+As atividades importantes, por outro lado, são aquelas que têm um impacto significativo no longo prazo. Elas contribuem para o alcance dos objetivos pessoais e profissionais, e geralmente requerem planejamento e dedicação para serem concluídas. Essas tarefas são geralmente realizadas por você mesmo e devem ser priorizadas em relação às outras atividades. É comum uma atividade importante tornar-se uma atividade urgente se não realizarmos no prazo planejado. Um possível exemplo disso seria fazer a manutenção do automóvel, que é uma atividade importante e, se não realizarmos na periodicidade adequada, muito provavelmente irá se transformar em uma atividade urgente quando o carro quebrar e tivermos que chamar o socorro ou levar o carro para a oficina às pressas.
+
+Alguns exemplos de atividades importantes:
+
+Estudar para uma prova;
+Desenvolver habilidades profissionais para alcançar seus objetivos de carreira;
+Passar tempo com sua família e amigos;
+Fazer exercícios regularmente para manter a saúde física;
+Ler um livro para expandir sua mente e aumentar seu conhecimento;
+Participar de uma reunião de planejamento estratégico para alcançar seus objetivos profissionais.
+Esfera Circunstancial
+Por fim, as atividades circunstanciais são aquelas que não são importantes nem urgentes e geralmente são realizadas por conveniência ou por causa de outras pessoas. Essas tarefas podem ser delegadas ou simplesmente eliminadas, pois não têm um impacto significativo na sua vida.
+
+Alguns exemplos de atividades circunstanciais:
+
+Ver um programa de televisão sem sentido;
+Navegar nas redes sociais sem um objetivo específico;
+Assistir a um filme sem nenhuma razão específica;
+Fazer compras sem uma lista de compras clara;
+Passar tempo em jogos sem valor e/ou objetivo.
+Em relação aos exemplos acima, é importante dizer que cada pessoa tem sua própria perspectiva sobre o que é importante, urgente ou circunstancial para ela. O uso da tríade do tempo é uma forma de se concentrar em seus objetivos e priorizar o tempo de acordo com suas necessidades e desejos, sem deixar que outras coisas te distraiam.
+
+Ao usar a metodologia, você pode identificar rapidamente quais atividades precisam ser priorizadas e alocar seu tempo de forma eficiente. Isso ajuda a evitar a sobrecarga de trabalho e o estresse, e permite que você concentre sua energia em atividades que realmente importam, eliminando atividades que são simplesmente uma perda de tempo e permitindo que você alcance suas metas pessoais e profissionais mais rapidamente.
+
+Qual a predominância de cada esfera na sua tríade do tempo?
+Como fazer o cálculo
+Uma forma de calcularmos a predominância de cada esfera da tríade do tempo em nossa vida, é primeiramente responder qual a frequência que cada situação da tabela a seguir ocorre em nossas vidas. Para isso, utilizar a legenda: 1-Nunca; 2-Raramente; 3-Às vezes; 4-Quase sempre; 5-Sempre.
+
+
+Após responder todas as questões de 1 a 9, siga os passos:
+
+Some os valores atribuídos às perguntas 2, 5 e 8 para obter o valor total da esfera Urgência.
+Depois, some os valores atribuídos às perguntas 4, 7 e 9 para obter o valor total da esfera Importância.
+E então, some os valores atribuídos às perguntas 1, 3 e 6 para obter o valor total da esfera Circunstancial.
+Agora vamos transformar esses valores em percentual, dividindo o valor de cada esfera pela soma total. Dessa forma será possível obter as porcentagens de cada esfera da sua tríade do tempo.
+
+Exemplo prático de cálculo
+
+Esfera de Urgência: 10/23 = 43,5%
+Esfera de Importância: 6/23 = 26,1%
+Esfera Circunstancial: 7/23 = 30,4%
+Com base nesses resultados, o gráfico da tríade do tempo ficaria da seguinte forma:
+
+
+E qual seria a tríade ideal?
+A tríade ideal seria utilizar 70% do tempo com atividades importantes, até 20% com atividades urgentes e até 10% com atividades circunstanciais:
+
+
+Com essas proporções, será possível obter os melhores resultados para atingir seus objetivos.
+
+Aproveite a oportunidade e baixe nossa planilha gratuita para calcular sua tríade do tempo.
+
+
+
+Como implementar a tríade do tempo no meu dia a dia?
+Existem alguns passos simples que você pode seguir para começar a usar a tríade do tempo em seu dia a dia a partir de hoje:
+
+Faça uma lista de suas atividades: escreva todas as atividades que você precisa realizar, incluindo tanto as urgentes quanto as não urgentes.
+Classifique as atividades: classifique as atividades como urgentes, importantes ou circunstanciais usando a tríade do tempo.
+Priorize as atividades: comece pelas atividades mais urgentes e importantes e, em seguida, passe para as atividades menos urgentes e importantes.
+Eliminar atividades: seja rigoroso consigo mesmo e elimine atividades circunstanciais inúteis.
+Aloque o tempo: aloque um tempo específico para cada atividade e crie um plano de ação para completá-las.
+Faça um follow-up: faça um follow-up regular para garantir que você esteja progredindo nas atividades prioritárias.
+Refletir e ajustar: revisar o seu progresso periodicamente, refletindo sobre o que está dando certo e o que não está e ajustando suas atividades e prioridades em conformidade. Lembre-se de que as coisas mudam e os planos precisam ser adaptados. Seja flexível e adaptável a mudanças e priorize as atividades de acordo com as necessidades atuais.
+Começar a usar a tríade do tempo pode levar algum tempo para se acostumar. Mas, conforme você se aprofunda no processo e começa a priorizar suas atividades de acordo com sua importância e urgência, você notará melhorias significativas na sua produtividade e qualidade de vida.
+
+A tríade do tempo é uma ferramenta valiosa para ajudar as pessoas a organizarem suas atividades e alocar seu tempo de forma eficiente. Ela permite identificar e priorizar as atividades mais importantes e urgentes, ajudando a evitar a sobrecarga de trabalho e o estresse, a alcançar metas e objetivos significativos, a aumentar a eficiência e a melhorar a qualidade de vida. Aplicada em um ambiente empresarial, a tríade do tempo pode ser uma ferramenta valiosa para aumentar a produtividade dos trabalhadores e melhorar a eficiência dos processos.
+
+Uma empresa de consultoria de melhoria de processos, como a Nortegubisian, pode ajudar os trabalhadores de uma empresa a implementar a tríade do tempo e a utilizá-la de maneira eficaz. Isso pode incluir treinamento para os líderes sobre como usar a tríade do tempo, ajudando-os a classificar suas atividades e priorizá-las de forma eficiente, além de fornecer ferramentas e técnicas para gerenciar o tempo de forma eficaz. Além disso, uma empresa de consultoria de melhoria de processos pode ajudar os funcionários a se adaptar e serem flexíveis, para lidar com imprevistos ou mudanças nas prioridades, ajudando a organização a aumentar a produtividade, melhorar a eficiência e atingir seus objetivos.
+
+Agora que você já entendeu um pouco mais sobre esse tema, que tal entrar em contato com a Nortegubisian para saber como podemos ajudá-lo? Aproveite também para nos seguir nas nossas mídias sociais (Facebook, LinkedIn e Instagram).
+
+Perguntas:
+Quantas vezes por semana você se pega assistindo TV ou navegando na internet sem objetivo específico?
+Com que frequência você responde a mensagens de texto ou redes sociais imediatamente, mesmo quando está estudando?
+Quantas vezes você se sente distraído por atividades que não são relevantes para seus estudos, como jogos ou mídias sociais?
+Com que frequência você dedica tempo para estudar antes das provas, sem deixar para a última hora?
+Quantas vezes você interrompe uma atividade importante para resolver uma emergência de última hora?
+Com que frequência você participa de atividades que não contribuem para seus objetivos escolares ou pessoais?
+Quantas vezes por semana você investe tempo em atividades que contribuem para o seu crescimento pessoal, como leitura ou aprendizado de novas habilidades?
+Quantas vezes você precisa realizar uma tarefa de última hora devido à falta de planejamento anterior?
+Com que frequência você cumpre prazos importantes e entrega tarefas escolares no prazo?
+
+Respostas:
+Pergunta 1: 1
+Pergunta 2: 1
+Pergunta 3: 1
+Pergunta 4: 1
+Pergunta 5: 1
+Pergunta 6: 1
+Pergunta 7: 1
+Pergunta 8: 1
+Pergunta 9: 1
+
+Horas na segunda: 3
+Horas na terça: 4
+Horas na quarta: 6
+Horas na quinta:1
+Horas na sexta: 3
+Horas no sábado: 3
+Horas no domingo: 9
+
+Estudar para (por ordem de prioridade):
+Matemática
+Informática
+Inglês
+Escola
+
+
+Sabendo desse modelo, faça um modelo de plano de estudos para o estudante de nome: ${formData.nome}
+Esse aluno ${formData.horas} horas por semana e ele utilizará o plano por ${formData.semanas} semanas.
+O objetivo do aluno é ${formData.objetivo} no final desse plano de estudos.
+Escreva uma conclusão muito curta e concisa no final do texto`
+
+            fetch("https://ai.jovemtalento.tech/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "jtt2024",
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    system: 'Por favor, formate a seguinte mensagem para que haja "---" entre cada um dos dias e entre os dias e as observações finais:',
+                }),
+            })
+            .then(response => {
+                if (!response.ok && response.status !== 101) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API Response:', data);
+                // Save data to localStorage to pass to the next page
+
+                form.classList.add('sumir')
+                formatText(data.message)
+                resposta.innerHTML = data.message
+
+                localStorage.setItem('apiResponse', JSON.stringify(data));
+                // Redirect to plano.html
+            })
+            .catch(error => {
+                console.error("There was a problem with the fetch operation:", error);
+                alert('Form submission failed. Please try again.');
+            });
+        });
+    </script>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .formbold-submit-btn {
+    background-color: hsl(36, 100%, 46%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+   .formbold-main-wrapper {
+        display: flex;
+        align-items: left;
+        justify-content: left;
+        padding: 48px;
+    }
+
+   .formbold-form-wrapper {
+        margin: 0 auto;
+        max-width: 900px;
+        width: 100%;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+   .formbold-img {
+        margin-bottom: 40px;
+    }
+
+  .formbold-input-flex {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+  .formbold-input-flex>div {
+        width: 50%;
+    }
+
+  .formbold-form-input {
+        width: 100%;
+        padding: 13px 22px;
+        border-radius: 5px;
+        border: 1px solid #dde3ec;
+        background: #ffffff;
+        font-weight: 500;
+        font-size: 16px;
+        color: #536387;
+        outline: none;
+        resize: none;
+    }
+
+  .formbold-form-input:focus {
+        border-color: #6a64f1;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+  .formbold-form-label {
+        color: #536387;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+  .formbold-mb-5 {
+        margin-bottom: 20px;
+    }
+
+  .formbold-radio-flex {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+  .formbold-radio-label {
+        font-size: 14px;
+        line-height: 24px;
+        color: #07074d;
+        position: relative;
+        padding-left: 25px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+  .formbold-input-radio {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+  .formbold-radio-checkmark {
+        position: absolute;
+        top: -1px;
+        left: 0;
+        height: 18px;
+        width: 18px;
+        background-color: #ffffff;
+        border: 1px solid #dde3ec;
+        border-radius: 50%;
+    }
+
+  .formbold-radio-label.formbold-input-radio:checked~.formbold-radio-checkmark {
+        background-color: #6a64f1;
+    }
+
+  .formbold-radio-checkmark:after {
+        content: '';
+        position: absolute;
+        display: none;
+    }
+
+  .formbold-radio-label.formbold-input-radio:checked~.formbold-radio-checkmark:after {
+        display: block;
+    }
+
+  .formbold-radio-label.formbold-radio-checkmark:after {
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ffffff;
+        transform: translate(-50%, -50%);
+    }
+
+  .formbold-btn {
+        text-align: center;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 14px 25px;
+        border: none;
+        font-weight: 500;
+        background-color: #6a64f1;
+        color: white;
+        cursor: pointer;
+        margin-top: 25px;
+    }
+
+  .formbold-btn:hover {
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+</body>
+</html>
